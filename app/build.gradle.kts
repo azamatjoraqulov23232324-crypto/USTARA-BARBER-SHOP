@@ -24,6 +24,15 @@ android {
   }
 
   signingConfigs {
+    // ---------------------------------------------------------------------------------
+    // DIQQAT / ATTENTION:
+    // Google Play App Signing key (masalan, SHA-256: 8B:02:85:DF... bilan tugaydigan) Google Play
+    // bulutida saqlanadi. Biz uni bu yerda kiritolmaymiz, chunki uning maxfiy kalitini
+    // faqat Google biladi. Biz ilovani "Upload Key" (Yuklash kaliti) ya'ni "my-upload-key.jks"
+    // bilan imzolab Google Play Console-ga yuklaymiz (uning SHA-256 si: 7E:00:77... deb boshlanadi).
+    // Google Play esa ushbu imzoni olib tashlab, o'zining "App Signing Key" (8B:02:85... kaliti) bilan
+    // qaytadan imzolab foydalanuvchilarga tarqatadi. Bu xavfsizlik standarti hisoblanadi.
+    // ---------------------------------------------------------------------------------
     create("release") {
       val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
       storeFile = file(keystorePath)
