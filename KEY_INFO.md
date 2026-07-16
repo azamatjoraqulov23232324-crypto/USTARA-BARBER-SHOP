@@ -56,3 +56,30 @@ Siz hozir yuklash kaliti (`my-upload-key.jks`) bilan imzolangan `.aab` faylini b
 Agar sizga Firebase, Google Login yoki boshqa API servislar uchun SHA-256 talab qilinsa, u yerga **ikkala kalitning ham** SHA-256 kodini kiritishingiz shart:
 1.  **Yuklash kaliti SHA-256 si:** `7E:00:77:9A:C1:49:D1:3A:1D:27:AD:42:0C:64:DB:31:FA:66:27:D2:38:34:78:7F:10:43:7F:76:95:30:77:BF` (Mahalliy sinovlar va yuklash jarayonida ishlashi uchun).
 2.  **Google Play App Signing SHA-256 si:** `8B:02:85:DF:96:B3:B6:B9:D7:A2:73:3F:15:65:F1:4D:59:27:65:70:A5:FB:8D:2F:26:D0:5C:74:EB:A7:0C:63` (Google Play Store-dan yuklab olinganda ishlashi uchun).
+
+---
+
+## 5. PEPK Java buyrug'ini ishga tushirish (Google Play kalitini yuklash)
+
+Google Play Console sizdan kalitni shifrlab yuklashni so'raganda **PEPK (`pepk.jar`)** vositasidan foydalaniladi. Siz yozgan buyruqni loyihamizdagi **`my-upload-key.jks`** kalitiga moslashtirilgan ko'rinishi quyidagicha:
+
+### Tayyorgarlik Bosqichlari:
+1. Google Play Console sahifasidan **`pepk.jar`** va **`encryption_public_key.pem`** fayllarini yuklab oling.
+2. Ushbu fayllarni loyihangizning asosiy (root) jildiga (chap tarafdagi fayllar ro'yxatiga) yuklang (Drag-and-Drop yoki Upload orqali).
+3. Quyidagi buyruqni terminalda ishga tushiring:
+
+```bash
+java -jar pepk.jar \
+  --keystore=my-upload-key.jks \
+  --alias=upload \
+  --output=output.zip \
+  --include-cert \
+  --rsa-aes-encryption \
+  --encryption-key-path=encryption_public_key.pem
+```
+
+### Buyruq ishga tushganda so'raladigan parollar:
+* **Enter password for keystore 'my-upload-key.jks':** `password123` deb yozing va Enter bosing (yozganda ekranda harflar ko'rinmaydi).
+* **Enter password for key 'upload':** `password123` deb yozing va Enter bosing.
+
+Natijada loyihada **`output.zip`** fayli paydo bo'ladi. O'sha faylni yuklab olib Google Play Console-ga topshirasiz!
