@@ -34,11 +34,11 @@ android {
     // qaytadan imzolab foydalanuvchilarga tarqatadi. Bu xavfsizlik standarti hisoblanadi.
     // ---------------------------------------------------------------------------------
     create("release") {
-      val keystorePath = System.getenv("8B:02:85:DF:96:B3:B6:B9:D7:A2:73:3F:15:65:F1:4D:59:27:65:70:A5:FB:8D:2F:26:D0:5C:74:EB:A7:0C:63") ?: "${rootDir}/ustara-app-key.jks"
+      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/ustara-barber-key.jks"
       storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD") ?: "ustarababer123"
-      keyAlias = "ustara_alias"
-      keyPassword = System.getenv("KEY_PASSWORD") ?: "ustarababer123"
+      storePassword = System.getenv("STORE_PASSWORD") ?: "ustarabarber99"
+      keyAlias = "ustara_barber_alias"
+      keyPassword = System.getenv("KEY_PASSWORD") ?: "ustarabarber99"
     }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")
