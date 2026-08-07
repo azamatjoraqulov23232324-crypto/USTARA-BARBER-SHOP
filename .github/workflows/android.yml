@@ -1,27 +1,29 @@
-You are a senior Android engineer.
+name: Android APK Build
 
-I will upload a complete Android Studio project as a ZIP file.
+on:
+  workflow_dispatch:
 
-Your task is NOT to explain the errors. Your task is to FIX the project.
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-Requirements:
-- Fix every Gradle error.
-- Fix AndroidManifest.xml errors.
-- Fix build.gradle and build.gradle.kts errors.
-- Fix settings.gradle(.kts) errors.
-- Fix Kotlin/Java compile errors.
-- Update dependencies to compatible versions.
-- Make the project build successfully with the latest stable Android Gradle Plugin and Gradle.
-- Ensure JDK 17 compatibility.
-- Ensure the project builds with:
-  ./gradlew assembleDebug
-- Do not remove project functionality unless absolutely necessary.
-- If a library is missing, replace it with the correct dependency.
-- If configuration is wrong, rewrite the configuration.
-- Return the COMPLETE corrected files, not just snippets.
-- If multiple files need changes, rewrite every changed file completely.
-- At the end, provide a corrected ZIP-ready project structure.
+    steps:
+      - uses: actions/checkout@v4
 
-The final result must compile successfully without any errors and generate app-debug.apk.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-I want a fully working Android Studio project, not explanations.
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
